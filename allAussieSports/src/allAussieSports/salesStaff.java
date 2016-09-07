@@ -1,5 +1,8 @@
 package allAussieSports;
 
+import java.util.*;
+import java.util.HashMap;
+
 public class salesStaff extends employee
 {
    salesStaff(String id,String pword){

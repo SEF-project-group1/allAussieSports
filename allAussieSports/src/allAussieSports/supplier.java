@@ -1,12 +1,20 @@
 package allAussieSports;
 
+import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+
 public class supplier
 {
    private String supplierID,name,contactName,contactNumber,address;
    
+   public static HashMap<String, supplier>  
+   suppliers = new HashMap<String, supplier>();
+   
    supplier(String id,String name){
       this.supplierID=id;
       this.name=name;
+      suppliers.put(id, this);
    }
    
    /*Accessors*/

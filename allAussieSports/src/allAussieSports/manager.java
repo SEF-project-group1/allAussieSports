@@ -1,5 +1,8 @@
 package allAussieSports;
 
+import java.util.*;
+import java.util.HashMap;
+
 public class manager extends employee
 {
    manager(String id,String pword){
