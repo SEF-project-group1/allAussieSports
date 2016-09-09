@@ -10,7 +10,8 @@ public class purchase
    public HashMap<Integer, item> 
       cart= new HashMap<Integer,item>();
    static int totalPurchases;
-   private int cartQuantity,purchaseNum;
+   private int cartQuantity;
+   String purchaseCode;
    private customer buyer;
    LocalTime purchaseTime;
    LocalDate purchaseDate;
@@ -18,12 +19,12 @@ public class purchase
    
    purchase(customer buyer){
       this.buyer=buyer;
-      purchaseNum=totalPurchases++;
+      purchaseCode=String.format("pur%3d", totalPurchases++);
    }
    
    /*Accessors*/
-   public int getPurchaseNum(){
-      return purchaseNum;
+   public String getPurchaseCode(){
+      return purchaseCode;
    }
    
    /*Mutators*/
@@ -42,6 +43,11 @@ public class purchase
       purchaseTime=LocalTime.now();
       purchaseDate=LocalDate.now();
       
+   }
+   
+   public void completeSale(){
+      purchaseTime=LocalTime.now();
+      purchaseDate=LocalDate.now();
    }
    
    

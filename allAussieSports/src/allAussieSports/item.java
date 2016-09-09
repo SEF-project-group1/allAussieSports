@@ -4,18 +4,21 @@ import java.util.*;
 
 public class item
 {
+   private final static String itemConst="itm";
+   
    private String itemCode;
    private int stock,bulkDiscQuan,reOrderQuan;
    private double price,discPrice,bulkDiscPrice;
    private String itemName;
+   private static int itemsTotal=0;
    
    public static HashMap<String, item>  
    items = new HashMap<String, item>();
    
-   item(String code,String itemName){
-      this.itemCode=code;
+   item(String itemName){
+      itemCode=String.format("%s%3d",itemConst,itemsTotal);
       this.itemName=itemName;
-      items.put(code,this);
+      items.put(itemCode,this);
    }
    
    /*Accessors*/
@@ -53,7 +56,7 @@ public class item
    
    /*Mutators*/
    public void setItemCode(String code){
-      this.itemCode=code;
+      this.itemCode=String.format("%s%3d",itemConst,code);
    }
    
    public void setStock(int stock){
@@ -94,7 +97,7 @@ public class item
    }
    
    public static item getItemByName(String name){
-      item itemMatch= new item("Invalid","Invalid");
+      item itemMatch= new item("Invalid");
       for(Map.Entry<String, item> entry: items.entrySet()){
          if(entry.getValue().getItemName().toLowerCase()
                .equals(name.toLowerCase())){

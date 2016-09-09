@@ -5,10 +5,13 @@ import java.util.HashMap;
 
 public class salesStaff extends employee
 {
-   salesStaff(String id,String pword){
-      super(id,pword);
+   private final static String salesConst = "ess";
+   
+   salesStaff(String pword){
+      super(salesConst,pword);
    }
    
+   /*Accessors*/
    public String getPassword(){
       return super.getPassword();
    }
@@ -17,6 +20,7 @@ public class salesStaff extends employee
       return super.getID();
    }
    
+   /*Mutators*/
    public void setID(String id){
       super.setID(id);
    }
@@ -24,4 +28,8 @@ public class salesStaff extends employee
    public void setPassword(String pword){
       super.setPassword(pword);
    }
+   
+   /*Methods*/
+
+   
 }

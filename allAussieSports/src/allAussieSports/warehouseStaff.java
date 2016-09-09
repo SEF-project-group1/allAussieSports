@@ -5,8 +5,10 @@ import java.util.HashMap;
 
 public class warehouseStaff extends employee
 {
-   warehouseStaff(String id,String pword){
-      super(id,pword);
+   private final static String warehouseConst="wrh";
+   
+   warehouseStaff(String pword){
+      super(warehouseConst,pword);
    }
    
    public String getPassword(){
