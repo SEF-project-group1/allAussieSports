@@ -6,18 +6,15 @@ import java.util.Map;
 
 public class supplier
 {
-   private static final String supConst = "sup";
-   
    private String supplierID,name,contactName,contactNumber,address;
-   private static int supTotal=0;
    
    public static HashMap<String, supplier>  
    suppliers = new HashMap<String, supplier>();
    
-   supplier(String name){
-      this.supplierID=String.format("%s%3d", supConst,supTotal);
+   supplier(String id,String name){
+      this.supplierID=id;
       this.name=name;
-      suppliers.put(supplierID, this);
+      suppliers.put(id, this);
    }
    
    /*Accessors*/

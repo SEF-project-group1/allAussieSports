@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 public class employee
 {
-   private static int empTotal =0;
    private String password;
    private String employeeID;
    
@@ -14,7 +13,7 @@ public class employee
    
    employee(String id,String pword){
       this.password=pword;
-      this.employeeID=String.format("%s%3d", id,empTotal++);
+      this.employeeID=id;
       employees.put(id,this);
    }
    

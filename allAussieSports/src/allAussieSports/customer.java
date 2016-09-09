@@ -5,35 +5,26 @@ import java.util.HashMap;
 
 public class customer
 {
-   private final static String custConst="cus";
-   private static final String cardConst="car";
-   
-   private String customerID,cardID,name;
+   private String userID,cardNumber;
    private int loyaltyPoints;
-   private static int custTotal=0;
    
    public static HashMap<String, customer>  
    customers = new HashMap<String, customer>();
    
-   customer(String name){
-      customerID=String.format("%s%3d", custConst,custTotal);
-      cardID=String.format("%s%3d", custConst,custTotal++);
-      this.name=name;
+   customer(String id,String cardNumber){
+      this.userID=id;
+      this.cardNumber=cardNumber;
       loyaltyPoints=0;
-      customers.put(customerID, this);
+      customers.put(id, this);
    }
    
    /*Accessors*/
    public String getUserID(){
-      return customerID;
-   }
-   
-   public String getName(){
-      return name;
+      return userID;
    }
    
    public String getCardNumber(){
-      return cardID;
+      return cardNumber;
    }
    public int getLoyaltyPoints(){
       return loyaltyPoints;
@@ -41,19 +32,15 @@ public class customer
       
    /*Mutators*/
    public void setUserID(String id){
-      this.customerID=id;
+      this.userID=id;
    }
    
-   public void setCardNumber(String cnum){
-      this.cardID=String.format("%s%3d",custConst,cnum);
+   public void setCardNumber(String cNumber){
+      this.cardNumber=cNumber;
    }
    
    public void setLoyaltyPoints(int points){
       this.loyaltyPoints=points;
-   }
-   
-   public void setName(String name){
-      this.name=name;
    }
    
    /*Methods*/

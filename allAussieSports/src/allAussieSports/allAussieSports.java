@@ -16,6 +16,10 @@ public class allAussieSports{
        
        
    }
- 
+   
+   /*Sales staff only*/
+   public void overridePurchase(purchase purchase){
+	   purchase=null;
+   }
 
 }
