@@ -7,9 +7,10 @@ public class item
    private final static String itemConst="itm";
    
    private String itemCode;
-   private int stock,bulkDiscQuan,reOrderQuan;
-   private double price,discPrice,bulkDiscPrice;
+   private int stock=0,bulkDiscQuan=99999999,reOrderQuan=0;
+   private double price=0.00,discPrice=0.00,bulkDiscPrice=0.00;
    private String itemName;
+   private supplier supplier;
    private static int itemsTotal=0;
    
    public static HashMap<String, item>  
@@ -54,6 +55,10 @@ public class item
       return itemName;
    }
    
+   public supplier getSupplier(){
+      return supplier;
+   }
+   
    /*Mutators*/
    public void setItemCode(String code){
       this.itemCode=String.format("%s%3d",itemConst,code);
@@ -85,6 +90,10 @@ public class item
    
    public void setItemName(String name){
       itemName=name;
+   }
+   
+   public void setSupplier(supplier sup){
+      this.supplier=sup;
    }
    
    /*Methods*/

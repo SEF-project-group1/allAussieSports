@@ -11,21 +11,22 @@ public class allAussieSports{
    
    public static void main(String[] args)
    {
-      char selection;
+      String selection;
       boolean condition=false;
 
       
       do{
          System.out.printf("Menu options:\n(n)ew object\n(c)ustomer\n" +
                "(s)ales staff\n(w)arehouse staff\n(m)anager\ne(x)it\n");
-         selection=s.nextLine().charAt(0);
+         selection=s.nextLine();
       
-         switch(selection){
+         switch(selection.charAt(0)){
             case 'c':
                System.out.printf("See gui version\n");
                break;
             case 's':
-               System.out.printf("Not yet implemented\n");
+               System.out.printf("Not yet implemented, due to customer options" +
+                     " being required\n");
                break;
             case 'w':
                warehouseOptions();
@@ -44,13 +45,28 @@ public class allAussieSports{
       
          }
       }while(condition==false);
-       
+     s.close();  
    }
    public static void warehouseOptions(){
-      String iCode;
       int increase;
       boolean wCondition=false;
+      String iCode,id,pWord;
       
+      do{
+         System.out.printf("Enter your employee ID\n");
+         id=s.nextLine();
+         System.out.printf("Enter your password\n");
+         pWord=s.nextLine();
+         
+         if(pWord.equals(employee.getEmployeeById(id).getPassword())
+               && employee.getEmployeeById(id) instanceof warehouseStaff){
+            wCondition=true;
+         }else{
+            System.out.printf("Invalid login\n");
+         }
+      }while(wCondition==false);
+      
+      wCondition=false;
       do{
          System.out.printf("Enter code of item to be increased or x to exit\n");
          iCode=s.nextLine();
@@ -66,13 +82,29 @@ public class allAussieSports{
    }
    
    public static void managerOptions(){
-      char selection;
+      String selection;
       boolean mCondition=false;
+      String id,pWord;
       
       do{
+         System.out.printf("Enter your employee ID\n");
+         id=s.nextLine();
+         System.out.printf("Enter your password\n");
+         pWord=s.nextLine();
+         
+         if(pWord.equals(employee.getEmployeeById(id).getPassword())
+               && employee.getEmployeeById(id) instanceof manager){
+            mCondition=true;
+         }else{
+            System.out.printf("Invalid login\n");
+         }
+      }while(mCondition==false);
+      
+      mCondition=false;
+      do{
          System.out.printf("(a)lter (c)heck or e(x)it\n");
-         selection=s.nextLine().charAt(0);
-         switch(selection){
+         selection=s.nextLine();
+         switch(selection.charAt(0)){
          case 'a':
             managerAlter();
             break;
@@ -94,24 +126,25 @@ public class allAussieSports{
       double checkd=0.00;
       item i;
       
+      
       do{
          System.out.printf("Enter code of item you wish to check\n");
          i=item.getItemByCode(s.nextLine());
          System.out.printf("Check\n1.Price\n2.DiscPrice\n3.BulkDiscPrice\n" +
-               "4.BulkQuan\n5.ReOrderQuan\n6.Stock\n7.Name\n0.Exit\n");
-         selection=s.nextInt();
+               "4.BulkQuan\n5.ReOrderQuan\n6.Stock\n7.Name\n8.Supplier\n0.Exit\n");
+         selection=Integer.parseInt(s.nextLine());
          switch(selection){
          case 1:
             checkd=i.getPrice();
-            System.out.printf("Price equals %f\n",checkd);
+            System.out.printf("Price equals %.2f\n",checkd);
             break;
          case 2:
             checkd=i.getDiscPrice();
-            System.out.printf("DiscPrice equals %f\n",checkd);
+            System.out.printf("DiscPrice equals %.2f\n",checkd);
             break;
          case 3:
             checkd=i.getBulkDiscPrice();
-            System.out.printf("BulkDiscPrice equals %f\n",checkd);
+            System.out.printf("BulkDiscPrice equals %.2f\n",checkd);
             break;
          case 4:
             checki=i.getBulkDiscQuan();
@@ -127,6 +160,9 @@ public class allAussieSports{
             break;
          case 7:
             System.out.printf("Item name is: %s\n", i.getItemName());
+            break;
+         case 8:
+            System.out.printf("Supplier is: %s\n", i.getSupplier().getName());
             break;
          case 0:
             cCondition=true;
@@ -148,16 +184,19 @@ public class allAussieSports{
          System.out.printf("Enter code of item you wish to alter\n");
          i=item.getItemByCode(s.nextLine());
          System.out.printf("Alter\n1.Price\n2.DiscPrice\n3.BulkDiscPrice\n" +
-               "4.BulkQuan\n5.ReOrderQuan\n6.Stock\n0.Exit\n");
-         selection=s.nextInt();
+               "4.BulkQuan\n5.ReOrderQuan\n6.Stock\n7.Name\n8.Supplier\n0.Exit\n");
+         selection=Integer.parseInt(s.nextLine());
          if (selection!='x'){
          System.out.printf("Set new value to what\n");
             if(selection==7){
-               
+               newName=s.nextLine();
             }else if(4<=selection && selection<7){
-               
+               newInt=s.nextInt();
             }else if (0<selection && selection<4){
-               newDouble=s.nextDouble();
+               newDouble=Double.parseDouble(s.nextLine());
+            }else if(selection==8){
+               System.out.printf("Enter supplier id\n");
+               newName=s.nextLine();
             }
          }
          switch(selection){
@@ -189,7 +228,12 @@ public class allAussieSports{
             i.setItemName(newName);
             System.out.printf("Item name is %s\n", newName);
             break;
-         case '0':
+         case 8:
+            i.setSupplier(supplier.getSupplierByID(newName));
+            System.out.printf("Supplier is now name is %s\n", 
+                              supplier.getSupplierByID(newName).getName());
+            break;
+         case 0:
             aCondition=true;
             break;
          default:
@@ -205,7 +249,7 @@ public class allAussieSports{
       
       do{
          System.out.printf("Create (c)ustomer, (s)ales staff, (w)arehouse staff" +
-               "(m)anager, (i)tem or e(x)it\n");
+               "(m)anager, (i)tem, s(u)pplier or e(x)it\n");
          selection=s.nextLine().charAt(0);
          if(selection=='i'){
             System.out.printf("Please enter item name\n");
@@ -213,7 +257,7 @@ public class allAussieSports{
          }else if(selection=='w'|| selection=='s' || selection=='m'){
             System.out.printf("Please enter password\n");
             pWord=s.nextLine();
-         }else if(selection=='c'){
+         }else if(selection=='c' || selection=='u'){
             System.out.printf("Please enter name\n");
             pWord=s.nextLine();
          }
@@ -238,6 +282,10 @@ public class allAussieSports{
             new item(pWord);
             System.out.printf("New item created\n");
             break;
+         case 'u':
+            new supplier(pWord);
+            System.out.printf("New supplier created\n");
+            break;
          case 'x':
             cCondition=true;
             break;
@@ -246,8 +294,6 @@ public class allAussieSports{
          }
       }while(cCondition==false);
    }
+   
 
-   public static void clearScan(){
-      if(s.hasNext()==true){s.nextLine();}
-   }
 }

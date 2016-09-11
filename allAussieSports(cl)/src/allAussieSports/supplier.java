@@ -62,4 +62,20 @@ public class supplier
       this.address=address;
    }
    
+   /*Methods*/
+   public static supplier getSupplierByID(String id){
+      return suppliers.get(id);
+   }
+   
+   public static supplier getSupplierByName(String name){
+      supplier supMatch= new supplier("Invalid");
+      for(Map.Entry<String, supplier> entry: suppliers.entrySet()){
+         if(entry.getValue().getName().toLowerCase()
+               .equals(name.toLowerCase())){
+            supMatch=entry.getValue();
+         }
+      }
+      return supMatch;
+   }
+   
 }

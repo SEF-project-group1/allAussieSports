@@ -15,9 +15,10 @@ public class employee
    employee(String id,String pword){
       this.password=pword;
       this.employeeID=String.format("%s%03d", id,empTotal++);
-      employees.put(id,this);
+      employees.put(this.employeeID,this);
    }
    
+   /*Accessors*/
    public String getPassword(){
       return password;
    }
@@ -26,11 +27,17 @@ public class employee
       return employeeID;
    }
    
+   /*Mutators*/
    public void setID(String id){
       this.employeeID=id;
    }
    
    public void setPassword(String pword){
       this.password=pword;
+   }
+   
+   /*Methods*/
+   public static employee getEmployeeById(String id){
+      return employees.get(id);
    }
 }
