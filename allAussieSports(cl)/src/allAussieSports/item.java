@@ -5,27 +5,25 @@ import java.util.*;
 public class item
 {
    private final static String itemConst="itm";
-   
-   private String itemCode;
+   public static ArrayList<item> items= new ArrayList<item>();
+   private String itemCode,sport;
    private int stock=0,bulkDiscQuan=99999999,reOrderQuan=0;
    private double price=0.00,discPrice=0.00,bulkDiscPrice=0.00;
    private String itemName;
    private supplier supplier;
    private static int itemsTotal=0;
    
-   public static HashMap<String, item>  
-   items = new HashMap<String, item>();
-   
    item(String itemName){
       itemCode=String.format("%s%03d",itemConst,itemsTotal);
       this.itemName=itemName;
-      items.put(itemCode,this);
+      items.add(this);
    }
    
    /*Accessors*/
    public String getItemCode(){
       return itemCode;
    }
+  
    
    public int getStock(){
       return stock;
@@ -57,6 +55,10 @@ public class item
    
    public supplier getSupplier(){
       return supplier;
+   }
+   
+   public String getSport(){
+      return this.sport;
    }
    
    /*Mutators*/
@@ -96,23 +98,39 @@ public class item
       this.supplier=sup;
    }
    
+   public void setSport(String sport){
+      this.sport=sport;
+   }
+   
    /*Methods*/
    public void addStock(int add){
       setStock(add+getStock());
    }
    
    public static item getItemByCode(String iCode){
-      return items.get(iCode);
-   }
-   
-   public static item getItemByName(String name){
-      item itemMatch= new item("Invalid");
-      for(Map.Entry<String, item> entry: items.entrySet()){
-         if(entry.getValue().getItemName().toLowerCase()
-               .equals(name.toLowerCase())){
-            itemMatch=entry.getValue();
+      item iList[]=new item[items.size()];
+      item returnI = null;
+      
+      for(int i=0;i<iList.length;i++){
+         if(iList[i].itemCode.equals(iCode)){
+            returnI=iList[i];
+            break;
          }
       }
+      return returnI;
+   }
+   
+   public static ArrayList getItemByName(String name){
+      ArrayList<item> itemMatch=new ArrayList<item>();
+      item iList[]=new item[items.size()];
+      
+      iList=(item[]) items.toArray();
+      for(int i=0;i<iList.length;i++){
+         if(iList[i].itemName.compareToIgnoreCase(name)<3){
+            itemMatch.add(iList[i]);
+         }
+      }
+      
       return itemMatch;
    }
    

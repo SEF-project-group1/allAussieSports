@@ -8,6 +8,7 @@ public class employee
    private static int empTotal =0;
    private String password;
    private String employeeID;
+   private boolean loggedIn;
    
    public static HashMap<String, employee>  
    employees = new HashMap<String, employee>();
@@ -15,6 +16,7 @@ public class employee
    employee(String id,String pword){
       this.password=pword;
       this.employeeID=String.format("%s%03d", id,empTotal++);
+      this.loggedIn=false;
       employees.put(this.employeeID,this);
    }
    
@@ -27,6 +29,10 @@ public class employee
       return employeeID;
    }
    
+   public boolean isLoggedIn(){
+      return loggedIn;
+   }
+   
    /*Mutators*/
    public void setID(String id){
       this.employeeID=id;
@@ -34,6 +40,14 @@ public class employee
    
    public void setPassword(String pword){
       this.password=pword;
+   }
+   
+   public void logOut(){
+      this.loggedIn=false;
+   }
+   
+   public void logIn(){
+      this.loggedIn=true;
    }
    
    /*Methods*/
