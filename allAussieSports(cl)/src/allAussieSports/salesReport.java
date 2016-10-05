@@ -24,6 +24,5 @@ public class salesReport
    /*Accessors*/
    
    /*Mutators*/
-   private HashMap<item,Double> getHighestItem(ArrayList<item> items){
-  
+   
 }

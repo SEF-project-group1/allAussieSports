@@ -1,12 +1,13 @@
 package allAussieSports;
 
 import java.util.*;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.io.*;
 
 public class allAussieSports{
-   public static Scanner s=new Scanner(System.in);
+   private static Scanner s=new Scanner(System.in);
    
    
    public static void main(String[] args)
@@ -89,20 +90,24 @@ public class allAussieSports{
       do{
          System.out.printf("Enter your employee ID\n");
          id=s.nextLine();
-         System.out.printf("Enter your password\n");
-         pWord=s.nextLine();
+         if(employee.getEmployeeById(id).isLoggedIn()==false){
+            System.out.printf("Enter your password\n");
+            pWord=s.nextLine();
          
-         if(pWord.equals(employee.getEmployeeById(id).getPassword())
-               && employee.getEmployeeById(id) instanceof manager){
-            mCondition=true;
-         }else{
-            System.out.printf("Invalid login\n");
+         
+            if(pWord.equals(employee.getEmployeeById(id).getPassword())
+                  && employee.getEmployeeById(id) instanceof manager){
+               mCondition=true;
+               employee.getEmployeeById(id).logIn();
+            }else{
+               System.out.printf("Invalid login\n");
+            }
          }
       }while(mCondition==false);
       
       mCondition=false;
       do{
-         System.out.printf("(a)lter (c)heck or e(x)it\n");
+         System.out.printf("(a)lter, (c)heck, (r)eports, (l)og out or e(x)it\n");
          selection=s.nextLine();
          switch(selection.charAt(0)){
          case 'a':
@@ -112,6 +117,13 @@ public class allAussieSports{
             managerCheck();
             break;
          case 'x':
+            mCondition=true;
+            break;
+         case 'r':
+            salesReport();
+            break;
+         case 'l':
+            employee.getEmployeeById(id).logOut();
             mCondition=true;
             break;
          default:
@@ -295,5 +307,67 @@ public class allAussieSports{
       }while(cCondition==false);
    }
    
+   public static void salesReport(){
+      LocalDate startDate,endDate;
+      String year,month,day,sport;
+      HashMap<item,Integer> highest =new HashMap<item,Integer>();
+      HashMap<item,Integer> sales =new HashMap<item,Integer>();
+      item iList[]=new item[item.items.size()],itm;
+      double total=0;
+      
+      iList=(item[])item.items.toArray();
+      
+      System.out.printf("Generate sales report\n" +
+            "What date would you like to start the report?\n");
+      System.out.printf("What year?\n");
+      year=s.nextLine();
+      System.out.printf("What month (by number)?\n");
+      month=s.nextLine();
+      System.out.printf("What year?\n");
+      day=s.nextLine();
+      startDate=LocalDate.parse(String.format("%s-%s-%s", year,month,day));
+      
+      System.out.printf("What date would you like the report to end?\n");
+      System.out.printf("What year?\n");
+      year=s.nextLine();
+      System.out.printf("What month (by number)?\n");
+      month=s.nextLine();
+      System.out.printf("What year?\n");
+      day=s.nextLine();
+      endDate=LocalDate.parse(String.format("%s-%s-%s", year,month,day));
+      
+      
+      System.out.printf("Would you like to focus on a specific sport?\n" +
+            "(Press enter or type \"none\" if not\n");
+      sport=s.nextLine();
+      
+      if(sport==""){
+         sport="none";
+      }
+      
+      sales=purchase.getSales(startDate, endDate, sport);
+      highest=item.getHighestItem(sales);
+      
+      sport=sport.substring(0,1).toUpperCase() + sport.substring(1);
+      System.out.printf("Sales report.\nDates: %s - %s.\nRelevant Sport: %s.\n\n",
+            startDate.toString(),endDate.toString(),sport);
+      System.out.printf("Item Code | Name   | Sport| Price| Quantity | Total ");
+      for(int i=0;i<item.items.size();i++){
+         itm=iList[i];
+         if(sales.get(itm)!=null){
+            total+=sales.get(itm)*itm.getPrice();
+            System.out.printf(" $s   | %s | %s | $%02.2f | %d     | $%03.2f",
+                              itm.getItemCode(),itm.getItemName(),itm.getSport(),
+                              itm.getPrice(),sales.get(itm),sales.get(itm)*itm.getPrice());
+            if(highest.get(itm)!=null){
+               System.out.print("*");
+            }
+            System.out.printf("\n");
+         }
+      }
+      System.out.printf("                                            %03.2f\n", total);
+      System.out.printf("\nHighest selling item marked with *");
+      
+   }
 
 }
