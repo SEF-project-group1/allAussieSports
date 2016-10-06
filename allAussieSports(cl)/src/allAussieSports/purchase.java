@@ -100,4 +100,21 @@ public class purchase
       }
       return hReturn;
    }
+   
+   public static HashMap<item,Integer> getHighestItem(HashMap<item,Integer> checkItems){
+      double highest=0;
+      HashMap<item,Integer> highestItem=new HashMap<item,Integer>();
+      item[] iList = new item[item.items.size()];
+      
+      iList=(item[])item.items.toArray();
+      
+      for(int i=0;i<item.items.size();i++){
+         if(checkItems.get(iList[i])*iList[i].getPrice()>highest){
+            highestItem.clear();
+            highest=checkItems.get(iList[i])*iList[i].getPrice();
+            highestItem.put(iList[i],checkItems.get(iList[i]));
+         }
+      }
+      return highestItem;
+   }
 }

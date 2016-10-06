@@ -351,7 +351,8 @@ public class allAussieSports{
       }
       
       sales=purchase.getSales(startDate, endDate, sport);
-      highest=item.getHighestItem(sales);
+      highest=purchase.getHighestItem(sales);
+      new salesReport(startDate,endDate,sport);
       
       sport=sport.substring(0,1).toUpperCase() + sport.substring(1);
       System.out.printf("Sales report.\nDates: %s - %s.\nRelevant Sport: %s.\n\n",

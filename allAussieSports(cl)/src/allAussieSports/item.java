@@ -120,7 +120,7 @@ public class item
       return returnI;
    }
    
-   public static ArrayList getItemByName(String name){
+   public static ArrayList<item> getItemByName(String name){
       ArrayList<item> itemMatch=new ArrayList<item>();
       item iList[]=new item[items.size()];
       
@@ -134,20 +134,5 @@ public class item
       return itemMatch;
    }
    
-   public static HashMap<item,Integer> getHighestItem(HashMap<item,Integer> checkItems){
-      double highest=0;
-      HashMap<item,Integer> highestItem=new HashMap<item,Integer>();
-      item[] iList = new item[items.size()];
-      
-      iList=(item[])items.toArray();
-      
-      for(int i=0;i<item.items.size();i++){
-         if(checkItems.get(iList[i])*iList[i].getPrice()>highest){
-            highestItem.clear();
-            highest=checkItems.get(iList[i])*iList[i].getPrice();
-            highestItem.put(iList[i],checkItems.get(iList[i]));
-         }
-      }
-      return highestItem;
-   }
+   
 }

@@ -11,6 +11,7 @@ public class salesReport
    private HashMap<item,Integer> soldItems=new HashMap<item,Integer>();
    private String repCode,repSport;
    private LocalDate reportStart,reportFinish,reportGenerated;
+   private HashMap<item, Integer> highestItem=new HashMap<item,Integer>();
    
    salesReport(LocalDate startDate,LocalDate endDate,String sport){
       repSport=sport;
@@ -18,7 +19,7 @@ public class salesReport
       reportFinish=endDate;
       reportGenerated=LocalDate.now();
       soldItems=purchase.getSales(startDate,endDate,sport);
-      
+      highestItem=purchase.getHighestItem(soldItems);
    }
    
    /*Accessors*/
