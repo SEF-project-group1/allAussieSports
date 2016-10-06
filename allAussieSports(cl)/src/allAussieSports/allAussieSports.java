@@ -56,24 +56,29 @@ public class allAussieSports{
       do{
          System.out.printf("Enter your employee ID\n");
          id=s.nextLine();
-         System.out.printf("Enter your password\n");
-         pWord=s.nextLine();
+         if(employee.getEmployeeById(id).isLoggedIn()!=true){
+            System.out.printf("Enter your password\n");
+            pWord=s.nextLine();
          
-         if(pWord.equals(employee.getEmployeeById(id).getPassword())
-               && employee.getEmployeeById(id) instanceof warehouseStaff){
-            wCondition=true;
-         }else{
-            System.out.printf("Invalid login\n");
+            if(pWord.equals(employee.getEmployeeById(id).getPassword())
+                  && employee.getEmployeeById(id) instanceof warehouseStaff){
+               wCondition=true;
+            }else{
+               System.out.printf("Invalid login\n");
+            }
          }
       }while(wCondition==false);
       
       wCondition=false;
       do{
-         System.out.printf("Enter code of item to be increased or x to exit\n");
+         System.out.printf("Enter code of item to be increased, l to log out," +
+               " or x to exit\n");
          iCode=s.nextLine();
-         if(iCode.equals("x")){
+         if(iCode.equalsIgnoreCase("x")){
             wCondition=true;
             break;
+         }else if(iCode.equalsIgnoreCase("l")){
+            
          }
          System.out.printf("Enter amount to increase\n");
          increase=s.nextInt();
