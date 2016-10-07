@@ -20,6 +20,10 @@ public class salesStaff extends employee
       return super.getID();
    }
    
+   public static String getConst(){
+      return employee.getConst(salesConst);
+   }
+   
    /*Mutators*/
    public void setID(String id){
       super.setID(id);

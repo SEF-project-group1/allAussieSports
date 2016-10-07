@@ -24,6 +24,22 @@ public class customer
    }
    
    /*Accessors*/
+   public static String getConst(){
+      return custConst;
+   }
+   
+   public static String getCardConst(){
+      return cardConst;
+   }
+   
+   public static int getCustTotal(){
+      return custTotal;
+   }
+   
+   public static String getcardConst(){
+      return cardConst;
+   }
+   
    public String getUserID(){
       return customerID;
    }

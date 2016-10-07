@@ -15,6 +15,10 @@ public class warehouseStaff extends employee
       return super.getPassword();
    }
    
+   public static String getConst(){
+      return employee.getConst(warehouseConst);
+   }
+   
    public String getID(){
       return super.getID();
    }

@@ -21,6 +21,14 @@ public class employee
    }
    
    /*Accessors*/
+   public static int getEmpTotal(){
+      return empTotal;
+   }
+   
+   public static String getConst(String string){
+      return string;
+   }
+   
    public String getPassword(){
       return password;
    }

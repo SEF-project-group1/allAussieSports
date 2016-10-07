@@ -15,6 +15,10 @@ public class manager extends employee
       return super.getPassword();
    }
    
+   public static String getConst(){
+      return employee.getConst(manConst);
+   }
+   
    public String getID(){
       return super.getID();
    }

@@ -281,27 +281,35 @@ public class allAussieSports{
          switch(selection){
          case 's':
             new salesStaff(pWord);
-            System.out.printf("New manager created\n");
+            System.out.printf("New sales staff created\n");
+            System.out.printf("Your id is: %s%03d\n",salesStaff.getConst(),employee.getEmpTotal()-1);
             break;
          case 'w':
             new warehouseStaff(pWord);
             System.out.printf("New warehouse staff created\n");
+            System.out.printf("Your id is: %s%03d\n",warehouseStaff.getConst(),employee.getEmpTotal()-1);
             break;
          case 'm':
             new manager(pWord);
             System.out.printf("New manager created\n");
+            System.out.printf("Your id is: %s%03d\n",manager.getConst(),employee.getEmpTotal()-1);
             break;
          case 'c':
             new customer(pWord);
             System.out.printf("New customer created\n");
+            System.out.printf("Your customer id is: %s%03d and you card id is: %s%03d\n",
+                              customer.getConst(),customer.getCustTotal()-1,
+                              customer.getCardConst(),customer.getCustTotal()-1);
             break;
          case 'i':
             new item(pWord);
             System.out.printf("New item created\n");
+            System.out.printf("Item id is: %s%03d\n",item.getConst(),item.getItemsTotal()-1);
             break;
          case 'u':
             new supplier(pWord);
             System.out.printf("New supplier created\n");
+            System.out.printf("Your id is: %s%03d\n",supplier.getConst(),supplier.getSupTotal()-1);
             break;
          case 'x':
             cCondition=true;

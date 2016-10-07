@@ -14,12 +14,20 @@ public class item
    private static int itemsTotal=0;
    
    item(String itemName){
-      itemCode=String.format("%s%03d",itemConst,itemsTotal);
+      itemCode=String.format("%s%03d",itemConst,itemsTotal++);
       this.itemName=itemName;
       items.add(this);
    }
    
    /*Accessors*/
+   public static String getConst(){
+      return itemConst;
+   }
+   
+   public static int getItemsTotal(){
+      return itemsTotal;
+   }
+   
    public String getItemCode(){
       return itemCode;
    }
@@ -111,6 +119,7 @@ public class item
       item iList[]=new item[items.size()];
       item returnI = null;
       
+      iList=items.toArray(iList);
       for(int i=0;i<iList.length;i++){
          if(iList[i].itemCode.equals(iCode)){
             returnI=iList[i];
@@ -124,7 +133,7 @@ public class item
       ArrayList<item> itemMatch=new ArrayList<item>();
       item iList[]=new item[items.size()];
       
-      iList=(item[]) items.toArray();
+      iList=(item[]) items.toArray(iList);
       for(int i=0;i<iList.length;i++){
          if(iList[i].itemName.compareToIgnoreCase(name)<3){
             itemMatch.add(iList[i]);

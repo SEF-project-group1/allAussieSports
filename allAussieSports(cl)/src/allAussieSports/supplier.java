@@ -15,12 +15,20 @@ public class supplier
    suppliers = new HashMap<String, supplier>();
    
    supplier(String name){
-      this.supplierID=String.format("%s%03d", supConst,supTotal);
+      this.supplierID=String.format("%s%03d", supConst,supTotal++);
       this.name=name;
       suppliers.put(supplierID, this);
    }
    
    /*Accessors*/
+   public static String getConst(){
+      return supConst;
+   }
+   
+   public static int getSupTotal(){
+      return supTotal;
+   }
+   
    public String getSupplierID(){
       return supplierID;
    }
