@@ -135,7 +135,7 @@ public class item
       
       iList=(item[]) items.toArray(iList);
       for(int i=0;i<iList.length;i++){
-         if(iList[i].itemName.compareToIgnoreCase(name)<3){
+         if(iList[i].itemName.compareToIgnoreCase(name)==0){
             itemMatch.add(iList[i]);
          }
       }

@@ -74,6 +74,10 @@ public class customer
    
    /*Methods*/
    
-   
+   public static customer getCustomerById(String id){
+      customer cust;
+      cust=customers.get(id);
+      return cust;
+   }
    
 }

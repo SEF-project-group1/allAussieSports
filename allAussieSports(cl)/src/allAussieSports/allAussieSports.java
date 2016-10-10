@@ -18,16 +18,12 @@ public class allAussieSports{
       
       do{
          System.out.printf("Menu options:\n(n)ew object\n(c)ustomer\n" +
-               "(s)ales staff\n(w)arehouse staff\n(m)anager\ne(x)it\n");
+               "(w)arehouse staff\n(m)anager\ne(x)it\n");
          selection=s.nextLine();
       
          switch(selection.charAt(0)){
             case 'c':
-               System.out.printf("See gui version\n");
-               break;
-            case 's':
-               System.out.printf("Not yet implemented, due to customer options" +
-                     " being required\n");
+               checkout();
                break;
             case 'w':
                warehouseOptions();
@@ -382,6 +378,178 @@ public class allAussieSports{
       System.out.printf("                                            %03.2f\n", total);
       System.out.printf("\nHighest selling item marked with *");
       
+   }
+   
+   public static void checkout(){
+      purchase sale = null;
+      boolean condition=false;
+      String id,selection;
+      
+      
+      
+      System.out.printf("Welcome to All Aussie Sports!\n\n");
+      do{
+         System.out.printf("Enter your customer ID or scan your card\n");
+         id=s.nextLine();
+         
+            if(customer.getCustomerById(id)!=null){
+               sale=new purchase(customer.getCustomerById(id));
+               condition=true;
+            }else{
+               System.out.printf("Invalid login\n");
+            }
+         
+      }while(condition==false);
+      
+      
+      condition=false;
+      while(condition==false){
+         System.out.printf("Would you like to:\n (s)earch item\n(a)dd item to cart\n" +
+               "(f)inish purchase\ne(x)it\n--sales staff options--\n(r)emove item\n" +
+               "(c)ancel purchase\n");
+         selection=s.nextLine();
+       
+         switch (selection.charAt(0)){
+         case 's':
+            searchItem();
+            break;
+         case 'a':
+            addToCart(sale);
+            printItems(sale);
+            break;
+         case 'f':
+            sale.completePurchase();
+            System.out.println("Purchase completed");
+            condition=true;
+            break;
+         case 'x':
+              condition=true;
+              System.out.println("Purchase cancelled");
+              purchase.purchases.remove(sale);
+              sale=null;
+              break;
+         case 'r':
+            removeItem(sale);
+            break;
+         case 'c':
+            cancelPurchase(sale);
+            condition=true;
+            break;
+         default:
+            System.out.println("Invalid entry try again");
+            break;
+            
+         }
+      }
+   }
+   
+   public static void searchItem(){
+      item[] found=new item[item.items.size()];
+      ArrayList<item> iList = new ArrayList<item>();
+      String name;
+      
+      System.out.println("Enter the name of the item you want to find\n");
+      name=s.nextLine();
+      iList=item.getItemByName(name);
+      if(iList.isEmpty()!=true){
+         found=iList.toArray(found);
+         System.out.println("Items found\n| itemcode | Name | Price\n");
+         for(int i=0;i<found.length;i++){
+            if(found[i]!=null){
+               System.out.printf("| %s | %s | $%.2f |\n",found[i].getItemCode(),
+                              found[i].getItemName(),found[i].getPrice());
+            }else{
+               break;
+            }
+         }
+      }else{
+         System.out.println("No items found");
+      }
+   }
+   
+   public static void addToCart(purchase sale){
+      String selection;
+      item toAdd;
+      
+      System.out.println("Please enter the item code of the item you wish to add");
+      selection=s.nextLine();
+      toAdd=item.getItemByCode(selection);
+      if(toAdd!=null){
+         sale.addToCart(toAdd);
+         System.out.printf("%s added to cart",toAdd.getItemName());
+      }else{
+         System.out.println("No item matching that code found");
+      }
+   }
+   
+   public static void printItems(purchase sale){
+      Integer quan;
+      item[] iList = new item[item.items.size()];
+      double total=0;
+      
+      iList=item.items.toArray(iList);
+      
+      System.out.println("Cart contents:\n| ItemCode | Name | Quantity | Price");
+      for(int i=0;i<iList.length;i++){
+         quan=sale.cart.get(iList[i]);
+         if(quan!=null){
+            total+=quan*iList[i].getPrice();
+            System.out.printf("| %s | %s |    %d    | %.2f |\n",iList[i].getItemCode(),
+                              iList[i].getItemName(),quan,(quan*iList[i].getPrice()));
+         }
+         
+      }
+      System.out.printf("\nTotal cost: $%.2f\n",total);
+   }
+   
+   public static void removeItem(purchase sale){
+      String id,pWord,iCode;
+      boolean condition=false;
+      do{
+         System.out.printf("Enter your employee ID\n");
+         id=s.nextLine();
+            System.out.printf("Enter your password\n");
+            pWord=s.nextLine();
+         
+            if(pWord.equals(employee.getEmployeeById(id).getPassword())
+                  && employee.getEmployeeById(id) instanceof salesStaff){
+               condition=true;
+            }else{
+               System.out.printf("Invalid login\n");
+            }
+         
+      }while(condition==false);
+      
+      System.out.println("What item would you like to remove?");
+      iCode=s.nextLine();
+      if(sale.cart.remove(item.getItemByCode(iCode)) != null){
+         System.out.printf("%s was removed\n",item.getItemByCode(iCode).getItemName());
+      }else{
+         System.out.println("No such item exists");
+      }
+   }
+   
+   public static void cancelPurchase(purchase sale){
+      String id,pWord,iCode;
+      boolean condition=false;
+      do{
+         System.out.printf("Enter your employee ID\n");
+         id=s.nextLine();
+            System.out.printf("Enter your password\n");
+            pWord=s.nextLine();
+         
+            if(pWord.equals(employee.getEmployeeById(id).getPassword())
+                  && employee.getEmployeeById(id) instanceof salesStaff){
+               condition=true;
+            }else{
+               System.out.printf("Invalid login\n");
+            }
+         
+      }while(condition==false);
+      
+      purchase.purchases.remove(sale);
+      sale=null;
+      System.out.println("Purchase cancelled");
    }
 
 }
