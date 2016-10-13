@@ -78,12 +78,20 @@ public class purchase
       purchase pArray[]=new purchase[purchases.size()];
       item iArray[]=new item[item.items.size()];
       HashMap<item,Integer> hReturn=new HashMap<item,Integer>();
+      boolean sportMatch;
       int quan;
       
-      pArray=(purchase[]) purchases.toArray();
+      iArray=item.items.toArray(iArray);
+      pArray= purchases.toArray(pArray);
       for(int i=0;i<pArray.length;i++){
             for(int k=0;k<iArray.length;k++){
-               if((iArray[k].getSport().equalsIgnoreCase(sport)|| sport.equals("none"))
+               sportMatch=false;
+               if(iArray[k].getSport()!=null){
+                  if(iArray[k].getSport().equalsIgnoreCase(sport)){
+                     sportMatch=true;
+                  }
+               }
+               if((sportMatch==true|| sport.equals("none"))
                      && ((pArray[i].getPurchaseDate().isAfter(startDate) && 
                            pArray[i].getPurchaseDate().isBefore(endDate)) || 
                            pArray[i].getPurchaseDate().isEqual(startDate) ||
@@ -106,7 +114,7 @@ public class purchase
       HashMap<item,Integer> highestItem=new HashMap<item,Integer>();
       item[] iList = new item[item.items.size()];
       
-      iList=(item[])item.items.toArray();
+      iList=item.items.toArray(iList);
       
       for(int i=0;i<item.items.size();i++){
          if(checkItems.get(iList[i])*iList[i].getPrice()>highest){

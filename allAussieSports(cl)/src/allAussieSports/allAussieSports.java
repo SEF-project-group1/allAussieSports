@@ -324,7 +324,7 @@ public class allAussieSports{
       item iList[]=new item[item.items.size()],itm;
       double total=0;
       
-      iList=(item[])item.items.toArray();
+      iList=item.items.toArray(iList);
       
       System.out.printf("Generate sales report\n" +
             "What date would you like to start the report?\n");
@@ -332,7 +332,7 @@ public class allAussieSports{
       year=s.nextLine();
       System.out.printf("What month (by number)?\n");
       month=s.nextLine();
-      System.out.printf("What year?\n");
+      System.out.printf("What day?\n");
       day=s.nextLine();
       startDate=LocalDate.parse(String.format("%s-%s-%s", year,month,day));
       
@@ -341,7 +341,7 @@ public class allAussieSports{
       year=s.nextLine();
       System.out.printf("What month (by number)?\n");
       month=s.nextLine();
-      System.out.printf("What year?\n");
+      System.out.printf("What day?\n");
       day=s.nextLine();
       endDate=LocalDate.parse(String.format("%s-%s-%s", year,month,day));
       
@@ -361,12 +361,12 @@ public class allAussieSports{
       sport=sport.substring(0,1).toUpperCase() + sport.substring(1);
       System.out.printf("Sales report.\nDates: %s - %s.\nRelevant Sport: %s.\n\n",
             startDate.toString(),endDate.toString(),sport);
-      System.out.printf("Item Code | Name   | Sport| Price| Quantity | Total ");
+      System.out.printf("Item Code | Name   | Sport| Price| Quantity | Total \n");
       for(int i=0;i<item.items.size();i++){
          itm=iList[i];
          if(sales.get(itm)!=null){
             total+=sales.get(itm)*itm.getPrice();
-            System.out.printf(" $s   | %s | %s | $%02.2f | %d     | $%03.2f",
+            System.out.printf(" $%s   | %s | %s | $%02.2f | %d     | $%03.2f\n",
                               itm.getItemCode(),itm.getItemName(),itm.getSport(),
                               itm.getPrice(),sales.get(itm),sales.get(itm)*itm.getPrice());
             if(highest.get(itm)!=null){
@@ -375,8 +375,8 @@ public class allAussieSports{
             System.out.printf("\n");
          }
       }
-      System.out.printf("                                            %03.2f\n", total);
-      System.out.printf("\nHighest selling item marked with *");
+      System.out.printf("                                  Cart Total:  $%03.2f\n", total);
+      System.out.printf("\nHighest selling item marked with *\n");
       
    }
    
