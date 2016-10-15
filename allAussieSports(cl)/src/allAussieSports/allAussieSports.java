@@ -554,12 +554,23 @@ public class allAussieSports{
    public static void addToCart(purchase sale){
       String selection;
       item toAdd;
+      int quan;
       
       System.out.println("Please enter the item code of the item you wish to add");
       selection=s.nextLine();
       toAdd=item.getItemByCode(selection);
+      System.out.println("How many would you like?");
+      quan=s.nextInt();
       if(toAdd!=null){
-         sale.addToCart(toAdd);
+         if(quan<=toAdd.getStock()){
+            for(int i=0;i<quan;i++){
+               sale.addToCart(toAdd);
+            }
+         }else{
+               System.out.println("Not enough stock available");
+               return;
+            }
+         
          System.out.printf("%s added to cart",toAdd.getItemName());
       }else{
          System.out.println("No item matching that code found");

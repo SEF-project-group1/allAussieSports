@@ -8,7 +8,7 @@ public class item
    private final static String itemConst="itm";
    public static ArrayList<item> items= new ArrayList<item>();
    private String itemCode,sport;
-   private int stock=0,bulkDiscQuan=0,reOrderQuan=0;
+   private int stock=0,bulkDiscQuan=0,reOrderQuan=20;
    private double price=0.00,discPrice=0.00,bulkDiscPrice=0.00;
    private String itemName;
    private supplier supplier;
