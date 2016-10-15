@@ -108,7 +108,8 @@ public class allAussieSports{
       
       mCondition=false;
       do{
-         System.out.printf("(a)lter, (c)heck, (r)eports, (l)og out or e(x)it\n");
+         System.out.printf("(a)lter, (c)heck, (r)eports, (s)upplier options " +
+               "(l)og out or e(x)it\n");
          selection=s.nextLine();
          switch(selection.charAt(0)){
          case 'a':
@@ -126,6 +127,9 @@ public class allAussieSports{
          case 'l':
             employee.getEmployeeById(id).logOut();
             mCondition=true;
+            break;
+         case 's':
+            managerSuppOptions();
             break;
          default:
             System.out.printf("Invalid entry\n");
@@ -253,6 +257,76 @@ public class allAussieSports{
             System.out.printf("Invalid entry\n");
          }
       }while(aCondition==false);
+   }
+   
+   public static void managerSuppOptions(){
+      String inputStr;
+      supplier supp=null;
+      boolean condition=false;
+      int selection;
+      
+      while(condition==false){
+         System.out.println("Please enter the code of the supplier you wish" +
+               " to alter or x to exit");
+         inputStr=s.nextLine();
+         
+         if(inputStr=="x"){
+            return;
+         }
+         supp=supplier.getSupplierByID(inputStr);
+         if(supp == null){
+            System.out.println("Invalid entry try again");
+            continue;
+         }
+         condition=false;
+         while(condition==false){
+            System.out.println("What would you like to do?\n" +
+                  "1.Get name\n2.Get contact number\n3.Get address\n" +
+                  "4.Set name\n5.Set contact number\n6.Set address" +
+                  "\n0.Exit");
+            try{
+            selection=Integer.parseInt(inputStr=s.nextLine());
+            }catch(NumberFormatException e){
+               System.out.println("Invalid entry, try again");
+               continue;
+            }
+            switch(selection){
+            case 1:
+               System.out.printf("Supplier name is %s\n",supp.getName());
+               continue;
+            case 2:
+               System.out.printf("Supplier contact number is %s\n",supp.getContactNumber());
+               continue;
+            case 3:
+               System.out.printf("Supplier address is %s\n",supp.getAddress());
+               continue;
+            case 4:
+               System.out.println("What is the new supplier name?");
+               inputStr=s.nextLine();
+               supp.setName(inputStr);
+               System.out.printf("New supplier name is %s\n",supp.getName());
+               continue;
+            case 5:
+               System.out.println("What is the new supplier contact number?");
+               inputStr=s.nextLine();
+               supp.setContactNumber(inputStr);
+               System.out.printf("New supplier name is %s\n",supp.getName());
+               continue;
+            case 6:
+               System.out.println("What is the new supplier address?");
+               inputStr=s.nextLine();
+               supp.setAddress(inputStr);
+               System.out.printf("New supplier address is %s\n",supp.getAddress());
+               continue;
+            case 0:
+               System.out.println("Exiting");
+               return;
+            default:
+               System.out.println("Invalid entry, try again");
+               continue;
+            }
+         }
+      }
    }
    
    public static void createNew(){
