@@ -48,7 +48,13 @@ public class purchase
          cart.remove(item);
          cart.put(item,quan+1);
       }
-      total+=item.getPrice();
+      if(item.getBulkDiscQuan()<=cart.get(item)){
+         total+=item.getBulkDiscPrice();
+      }else if(item.getDiscPrice()!=0 && item.getDiscPrice()<item.getPrice()){
+         total+=item.getDiscPrice();
+      }else{
+         total+=item.getPrice();
+      }
    }
    
    public void removeFromCart(item item){
@@ -58,14 +64,48 @@ public class purchase
       if(quan!=0){
          cart.put(item, quan);
       }
-      total-=item.getPrice();
+      
+      if(item.getBulkDiscQuan()==cart.get(item)-1){
+         total-=item.getBulkDiscPrice();
+      }else if(item.getDiscPrice()!=0 && item.getDiscPrice()<item.getPrice()){
+         total-=item.getDiscPrice();
+      }else{
+         total-=item.getPrice();
+      }
+      
    }
    
    public void completePurchase(){
+      boolean condition=false;
+      String input;
       item[] iList=new item[item.items.size()];
+      while(condition==false){
+         if(total<5 && buyer.getLoyaltyPoints()<=20){
+            System.out.printf("You have %d loyalty points available\n" +
+                  "Would you like to apply a $5 discount? (y)es or (n)o?\n",
+                  buyer.getLoyaltyPoints());
+            input=allAussieSports.s.nextLine();
+            if(input.charAt(0)=='y'){
+               total-=5;
+               buyer.setLoyaltyPoints(buyer.getLoyaltyPoints()-20);
+               condition=true;
+            }else if(input.charAt(0)=='n'){
+               condition=true;
+            }else{
+               System.out.println("invalid input try again");
+               continue;
+            }
+         }else{
+            condition=true;
+         }
+      }
       purchaseTime=LocalTime.now();
       purchaseDate=LocalDate.now();
+      
+      
       purchases.add(this);
+      
+      System.out.printf("Purchase complete, you total cost is %.2f\n",total);
       
       iList=item.items.toArray(iList);
       for(int i=0;i<iList.length;i++){
@@ -74,11 +114,7 @@ public class purchase
          }
       }
    }
-   
-   public void completeSale(){
-      purchaseTime=LocalTime.now();
-      purchaseDate=LocalDate.now();
-   }
+  
   
    
    public static HashMap<item,Integer> getSales(LocalDate startDate,LocalDate endDate,String sport){
@@ -124,10 +160,12 @@ public class purchase
       iList=item.items.toArray(iList);
       
       for(int i=0;i<item.items.size();i++){
-         if(checkItems.get(iList[i])*iList[i].getPrice()>highest){
-            highestItem.clear();
-            highest=checkItems.get(iList[i])*iList[i].getPrice();
-            highestItem.put(iList[i],checkItems.get(iList[i]));
+         if(checkItems.get(iList[i])!=null){
+            if(checkItems.get(iList[i])*iList[i].getPrice()>highest){
+               highestItem.clear();
+               highest=checkItems.get(iList[i])*iList[i].getPrice();
+               highestItem.put(iList[i],checkItems.get(iList[i]));
+            }
          }
       }
       return highestItem;

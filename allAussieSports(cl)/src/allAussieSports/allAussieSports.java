@@ -7,7 +7,7 @@ import java.util.Map;
 import java.io.*;
 
 public class allAussieSports{
-   private static Scanner s=new Scanner(System.in);
+   public static Scanner s=new Scanner(System.in);
    
    
    public static void main(String[] args)
@@ -15,7 +15,7 @@ public class allAussieSports{
       String selection;
       boolean condition=false;
 
-      
+      seed.seedProgram();
       do{
          System.out.printf("Menu options:\n(n)ew object\n(c)ustomer\n" +
                "(w)arehouse staff\n(m)anager\ne(x)it\n");
@@ -219,15 +219,15 @@ public class allAussieSports{
          switch(selection){
          case 1:
             i.setPrice(newDouble);
-            System.out.printf("Price now equals: $%f\n", newDouble);
+            System.out.printf("Price now equals: $%.2f\n", newDouble);
             break;
          case 2:
             i.setDiscPrice(newDouble);
-            System.out.printf("DiscPrice now equals: $%f\n", newDouble);
+            System.out.printf("DiscPrice now equals: $%.2f\n", newDouble);
             break;
          case 3:
             i.setBulkDiscPrice(newDouble);
-            System.out.printf("BulkDiscPrice now equals: $%f\n", newDouble);
+            System.out.printf("BulkDiscPrice now equals: $%.2f\n", newDouble);
             break;
          case 4:
             i.setBulkDiscQuan(newInt);
@@ -435,12 +435,13 @@ public class allAussieSports{
       sport=sport.substring(0,1).toUpperCase() + sport.substring(1);
       System.out.printf("Sales report.\nDates: %s - %s.\nRelevant Sport: %s.\n\n",
             startDate.toString(),endDate.toString(),sport);
-      System.out.printf("Item Code | Name   | Sport| Price| Quantity | Total \n");
+      System.out.printf("Item Code |     Name     |   Sport  |" +
+            " Price | Quantity |  Total \n");
       for(int i=0;i<item.items.size();i++){
          itm=iList[i];
          if(sales.get(itm)!=null){
             total+=sales.get(itm)*itm.getPrice();
-            System.out.printf(" $%s   | %s | %s | $%02.2f | %d     | $%03.2f\n",
+            System.out.printf(" $%s   | %s | %s | $%02.2f | %d     | $%03.2f",
                               itm.getItemCode(),itm.getItemName(),itm.getSport(),
                               itm.getPrice(),sales.get(itm),sales.get(itm)*itm.getPrice());
             if(highest.get(itm)!=null){
@@ -449,7 +450,8 @@ public class allAussieSports{
             System.out.printf("\n");
          }
       }
-      System.out.printf("                                  Cart Total:  $%03.2f\n", total);
+      System.out.printf("                                  " +
+            "       Total Sales:  $%03.2f\n", total);
       System.out.printf("\nHighest selling item marked with *\n");
       
    }
@@ -599,6 +601,7 @@ public class allAussieSports{
    
    public static void removeItem(purchase sale){
       String id,pWord,iCode;
+      int quan=0;
       boolean condition=false;
       do{
          System.out.printf("Enter your employee ID\n");
@@ -617,10 +620,24 @@ public class allAussieSports{
       
       System.out.println("What item would you like to remove?");
       iCode=s.nextLine();
-      if(sale.cart.remove(item.getItemByCode(iCode)) != null){
-         System.out.printf("%s was removed\n",item.getItemByCode(iCode).getItemName());
-      }else{
+      try{
+         System.out.println("How man would you like to remove?");
+         quan=s.nextInt();
+      }catch(NumberFormatException e){
+         System.out.println("Invalid entry");
+      }
+      if(quan>sale.cart.get(item.getItemByCode(iCode))){
+         System.out.printf("Cart does not contain that many %s\n",item.getItemByCode(iCode));
+         return;
+      }
+      for(int i=0;i<quan;i++){
+         if(sale.cart.remove(item.getItemByCode(iCode)) != null){
+            if(i==quan-1){
+               System.out.printf("%s was removed\n",item.getItemByCode(iCode).getItemName());
+            }
+         }else{
          System.out.println("No such item exists");
+         }
       }
    }
    
