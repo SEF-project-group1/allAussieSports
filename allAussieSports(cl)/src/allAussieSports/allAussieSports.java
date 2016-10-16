@@ -645,7 +645,7 @@ public class allAussieSports{
       selection=s.nextLine();
       toAdd=item.getItemByCode(selection);
       System.out.println("How many would you like?");
-      quan=s.nextInt();
+      quan=Integer.parseInt(s.nextLine());
       if(toAdd!=null){
          if(quan<=toAdd.getStock()){
             for(int i=0;i<quan;i++){
@@ -666,16 +666,23 @@ public class allAussieSports{
       Integer quan;
       item[] iList = new item[item.items.size()];
       double total=0;
+      String name;
       
       iList=item.items.toArray(iList);
       
-      System.out.println("Cart contents:\n| ItemCode | Name | Quantity | Price");
+      System.out.printf("Cart contents:\n| ItemCode | %10s | Quantity | Price\n"
+                         ," Name ");
       for(int i=0;i<iList.length;i++){
          quan=sale.cart.get(iList[i]);
          if(quan!=null){
+            if(iList[i].getItemName().length()>9){
+               name=iList[i].getItemName().substring(0,9);
+            }else{
+               name=iList[i].getItemName();
+            }
             total+=quan*iList[i].getPrice();
-            System.out.printf("| %s | %s |    %d    | %.2f |\n",iList[i].getItemCode(),
-                              iList[i].getItemName(),quan,(quan*iList[i].getPrice()));
+            System.out.printf("| %s   | %10s |    %d     | %.2f |\n",iList[i].getItemCode(),
+                              name,quan,(quan*iList[i].getPrice()));
          }
          
       }

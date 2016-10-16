@@ -67,6 +67,7 @@ public class seed
       for(int i=0;i<20;i++){
          itm=new item(itemNames[i]);
          itm.setPrice(prices[i]);
+         itm.setStock(reOrderAmount[i]*3);
          itm.setReOrderQuan(reOrderAmount[i]);
          itm.setBulkDiscQuan(bulkDiscQuan[i]);
          itm.setBulkDiscPrice(bulkDiscPrices[i]);
