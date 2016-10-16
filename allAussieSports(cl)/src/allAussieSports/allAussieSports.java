@@ -186,38 +186,47 @@ public class allAussieSports{
          case 1:
             checkd=i.getPrice();
             System.out.printf("Price equals %.2f\n",checkd);
+            cCondition=true;
             break;
          case 2:
             checkd=i.getDiscPrice();
             System.out.printf("DiscPrice equals %.2f\n",checkd);
+            cCondition=true;
             break;
          case 3:
             checkd=i.getBulkDiscPrice();
             System.out.printf("BulkDiscPrice equals %.2f\n",checkd);
+            cCondition=true;
             break;
          case 4:
             checki=i.getBulkDiscQuan();
             System.out.printf("BulkDiscQuan equals %d\n",checki);
+            cCondition=true;
             break;
          case 5:
             checki=i.getReOrderQuan();
             System.out.printf("ReOrderQuan equals %d\n",checki);
+            cCondition=true;
             break;
          case 6:
             checki=i.getStock();
             System.out.printf("Stock equals %d\n",checki);
+            cCondition=true;
             break;
          case 7:
             System.out.printf("Item name is: %s\n", i.getItemName());
+            cCondition=true;
             break;
          case 8:
             System.out.printf("Supplier is: %s\n", i.getSupplier().getName());
+            cCondition=true;
             break;
          case 0:
             cCondition=true;
             break;
          default:
             System.out.printf("Invalid entry\n");
+            break;
          }
       }while(cCondition==false);
    }
@@ -257,35 +266,43 @@ public class allAussieSports{
          case 1:
             i.setPrice(newDouble);
             System.out.printf("Price now equals: $%.2f\n", newDouble);
+            aCondition=true;
             break;
          case 2:
             i.setDiscPrice(newDouble);
             System.out.printf("DiscPrice now equals: $%.2f\n", newDouble);
+            aCondition=true;
             break;
          case 3:
             i.setBulkDiscPrice(newDouble);
             System.out.printf("BulkDiscPrice now equals: $%.2f\n", newDouble);
+            aCondition=true;
             break;
          case 4:
             i.setBulkDiscQuan(newInt);
             System.out.printf("BulkDiscQuan now equals: $%d\n", newInt);
+            aCondition=true;
             break;
          case 5:
             i.setReOrderQuan(newInt);
             System.out.printf("ReOrderQuan now equals: %d\n", newInt);
+            aCondition=true;
             break;
          case 6:
             i.setStock(newInt);
             System.out.printf("Stock now equals: %d\n", newInt);
+            aCondition=true;
             break;
          case 7:
             i.setItemName(newName);
             System.out.printf("Item name is %s\n", newName);
+            aCondition=true;
             break;
          case 8:
             i.setSupplier(supplier.getSupplierByID(newName));
             System.out.printf("Supplier is now name is %s\n", 
                               supplier.getSupplierByID(newName).getName());
+            aCondition=true;
             break;
          case 0:
             aCondition=true;
