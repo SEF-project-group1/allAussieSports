@@ -446,7 +446,7 @@ public class allAussieSports{
    
    public static void salesReport(){
       LocalDate startDate,endDate;
-      String year,month,day,sport;
+      String year,month,day,sport,name,dissport;
       HashMap<item,Integer> highest =new HashMap<item,Integer>();
       HashMap<item,Integer> sales =new HashMap<item,Integer>();
       item iList[]=new item[item.items.size()],itm;
@@ -486,7 +486,7 @@ public class allAussieSports{
             "(Press enter or type \"none\" if not)\n");
       sport=s.nextLine();
       
-      if(sport==""){
+      if(sport.equals("")){
          sport="none";
       }
       try {
@@ -500,19 +500,34 @@ public class allAussieSports{
       sport=sport.substring(0,1).toUpperCase() + sport.substring(1);
       System.out.printf("Sales report.\nDates: %s - %s.\nRelevant Sport: %s.\n\n",
             startDate.toString(),endDate.toString(),sport);
-      System.out.printf("Item Code |     Name     |   Sport  |" +
-            " Price | Quantity |  Total \n");
+      System.out.printf("Item Code | %s | %s | Price | Quantity |  Total \n"
+                  ,String.format("%10s", " Name"),String.format("%10s"," Sport"));
       for(int i=0;i<item.items.size();i++){
-         itm=iList[i];
-         if(sales.get(itm)!=null){
-            total+=sales.get(itm)*itm.getPrice();
-            System.out.printf(" $%s   | %s | %s | $%02.2f | %d     | $%03.2f",
-                              itm.getItemCode(),itm.getItemName(),itm.getSport(),
-                              itm.getPrice(),sales.get(itm),sales.get(itm)*itm.getPrice());
-            if(highest.get(itm)!=null){
-               System.out.print("*");
+         try{
+            itm=iList[i];
+            if(sales.get(itm)!=null){
+               total+=sales.get(itm)*itm.getPrice();
+               if(itm.getItemName().length()>9){
+                  name=itm.getItemName().substring(0,9);
+               }else{
+                  name=itm.getItemName();
+               }
+               if(itm.getSport().length()>9){
+                  dissport=itm.getSport().substring(0,9);
+               }else{
+                  dissport=itm.getSport();
+               }
+               System.out.printf(" %s   | %s | %s | $%02.2f | %d     | $%03.2f",
+                                 itm.getItemCode(),String.format("%10s",name),
+                                 String.format("%10s",dissport),
+                                 itm.getPrice(),sales.get(itm),sales.get(itm)*itm.getPrice());
+               if(highest.get(itm)!=null){
+                  System.out.print("*");
+               }
+               System.out.printf("\n");
             }
-            System.out.printf("\n");
+         }catch(Exception e){
+            continue;
          }
       }
       System.out.printf("                                  " +
