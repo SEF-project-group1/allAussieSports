@@ -50,9 +50,22 @@ public class allAussieSports{
       String iCode,id,pWord;
       
       do{
-         System.out.printf("Enter your employee ID\n");
+         System.out.printf("Enter your employee ID or x to exit\n");
          id=s.nextLine();
-         if(employee.getEmployeeById(id).isLoggedIn()!=true){
+         if(id.equalsIgnoreCase("x")){
+            wCondition=true;
+            return;
+         }
+         try
+         {
+            if(employee.getEmployeeById(id).isLoggedIn()!=true);
+         }
+         catch (Exception e)
+         {
+            System.out.println("Invalid entry");
+         }
+         
+         {
             System.out.printf("Enter your password\n");
             pWord=s.nextLine();
          
@@ -89,9 +102,23 @@ public class allAussieSports{
       String id,pWord;
       
       do{
-         System.out.printf("Enter your employee ID\n");
+         System.out.printf("Enter your employee ID or x to exit\n");
          id=s.nextLine();
-         if(employee.getEmployeeById(id).isLoggedIn()==false){
+         if(id.equalsIgnoreCase("x")){
+            mCondition=true;
+            return;
+         }
+         try
+         {
+            if(employee.getEmployeeById(id).isLoggedIn()==false);
+         }
+         catch (Exception e)
+         {
+            System.out.println("Invalid entry");
+            continue;
+         }
+         
+         {
             System.out.printf("Enter your password\n");
             pWord=s.nextLine();
          
@@ -147,6 +174,11 @@ public class allAussieSports{
       do{
          System.out.printf("Enter code of item you wish to check\n");
          i=item.getItemByCode(s.nextLine());
+         if (i == null){
+            System.out.println("Item not found");
+               return;
+         }
+         
          System.out.printf("Check\n1.Price\n2.DiscPrice\n3.BulkDiscPrice\n" +
                "4.BulkQuan\n5.ReOrderQuan\n6.Stock\n7.Name\n8.Supplier\n0.Exit\n");
          selection=Integer.parseInt(s.nextLine());
@@ -200,6 +232,11 @@ public class allAussieSports{
       do{
          System.out.printf("Enter code of item you wish to alter\n");
          i=item.getItemByCode(s.nextLine());
+         if (i == null) {
+            System.out.println("Item not found");
+            return;
+         }
+         
          System.out.printf("Alter\n1.Price\n2.DiscPrice\n3.BulkDiscPrice\n" +
                "4.BulkQuan\n5.ReOrderQuan\n6.Stock\n7.Name\n8.Supplier\n0.Exit\n");
          selection=Integer.parseInt(s.nextLine());
@@ -270,7 +307,7 @@ public class allAussieSports{
                " to alter or x to exit");
          inputStr=s.nextLine();
          
-         if(inputStr=="x"){
+         if(inputStr.equalsIgnoreCase("x")){
             return;
          }
          supp=supplier.getSupplierByID(inputStr);
@@ -408,8 +445,12 @@ public class allAussieSports{
       month=s.nextLine();
       System.out.printf("What day?\n");
       day=s.nextLine();
+      try {
       startDate=LocalDate.parse(String.format("%s-%s-%s", year,month,day));
-      
+      } catch (Exception e) {
+         System.out.println("Invalid entry");
+         return;
+      }
       System.out.printf("What date would you like the report to end?\n");
       System.out.printf("What year?\n");
       year=s.nextLine();
@@ -417,21 +458,28 @@ public class allAussieSports{
       month=s.nextLine();
       System.out.printf("What day?\n");
       day=s.nextLine();
+      try {
       endDate=LocalDate.parse(String.format("%s-%s-%s", year,month,day));
-      
+      } catch (Exception e) {
+         System.out.println("Invalid entry");
+         return;
+      }
       
       System.out.printf("Would you like to focus on a specific sport?\n" +
-            "(Press enter or type \"none\" if not\n");
+            "(Press enter or type \"none\" if not)\n");
       sport=s.nextLine();
       
       if(sport==""){
          sport="none";
       }
-      
+      try {
       sales=purchase.getSales(startDate, endDate, sport);
       highest=purchase.getHighestItem(sales);
       new salesReport(startDate,endDate,sport);
-      
+      } catch (Exception e) {
+         System.out.println("Invalid date format. Please try again");
+         return;
+      }
       sport=sport.substring(0,1).toUpperCase() + sport.substring(1);
       System.out.printf("Sales report.\nDates: %s - %s.\nRelevant Sport: %s.\n\n",
             startDate.toString(),endDate.toString(),sport);
@@ -484,7 +532,10 @@ public class allAussieSports{
                "(f)inish purchase\ne(x)it\n--sales staff options--\n(r)emove item\n" +
                "(c)ancel purchase\n");
          selection=s.nextLine();
-       
+         if(selection.equals("")){
+            System.out.println("No selection made");
+            continue;
+         }
          switch (selection.charAt(0)){
          case 's':
             searchItem();
@@ -604,8 +655,21 @@ public class allAussieSports{
       int quan=0;
       boolean condition=false;
       do{
-         System.out.printf("Enter your employee ID\n");
+         System.out.printf("Enter your employee ID or x to exit\n");
          id=s.nextLine();
+         if(id.equalsIgnoreCase("x")){
+            condition=true;
+            return;
+         }
+         try
+         {
+            if(employee.getEmployeeById(id).isLoggedIn()==false);
+         }
+         catch (Exception e)
+         {
+            System.out.println("Invalid entry");
+            continue;
+         }
             System.out.printf("Enter your password\n");
             pWord=s.nextLine();
          
@@ -647,6 +711,19 @@ public class allAussieSports{
       do{
          System.out.printf("Enter your employee ID\n");
          id=s.nextLine();
+         if(id.equalsIgnoreCase("x")){
+            condition=true;
+            return;
+         }
+         try
+         {
+            if(employee.getEmployeeById(id).isLoggedIn()==false);
+         }
+         catch (Exception e)
+         {
+            System.out.println("Invalid entry");
+            continue;
+         }
             System.out.printf("Enter your password\n");
             pWord=s.nextLine();
          
